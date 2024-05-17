@@ -32,11 +32,11 @@ function DataComponent() {
   };
 
   const nextPage = () => {
-    setCurrentPage(currentPage + 1);
+    setCurrentPage(currentPage + 5);
   };
 
   const prevPage = () => {
-    setCurrentPage(currentPage - 1);
+    setCurrentPage(currentPage - 5);
   };
 
   const handleSort = (columnName) => {
