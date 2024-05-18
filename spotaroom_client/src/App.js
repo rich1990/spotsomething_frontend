@@ -5,7 +5,7 @@ import DataComponent from './components/DataComponent';
 function App() {
   return (
     <Container>
-      <h1>Spot a room</h1>
+      <h2>Spot a room</h2>
       <DataComponent />
     </Container>
   );

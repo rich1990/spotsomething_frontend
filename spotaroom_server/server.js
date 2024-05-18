@@ -9,7 +9,7 @@ const SYMFONY_API_BASE_URL = 'http://spotaroom.test/api'; // Replace with your S
 // Get all products
 app.get('/api/flats', async (req, res) => {
 
-  const { page, limit, sortBy, sortOrder } = req.query;
+  const { page, limit, sortBy, sortOrder, search } = req.query;
 
   try {
     const response = await axios.get(`${SYMFONY_API_BASE_URL}/flats`, {
@@ -17,7 +17,8 @@ app.get('/api/flats', async (req, res) => {
         page,
         limit,
         sortBy,
-        sortOrder
+        sortOrder,
+        search
       }
     });
     res.json(response.data);

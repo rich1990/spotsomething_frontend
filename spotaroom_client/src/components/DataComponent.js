@@ -11,6 +11,8 @@ import {
   Paper,
   TableSortLabel,
   Button,
+  TextField,
+  Box,
 } from '@mui/material';
 
 function DataComponent() {
@@ -19,13 +21,14 @@ function DataComponent() {
   const [itemsPerPage] = useState(5);
   const [sortBy, setSortBy] = useState('id');
   const [sortOrder, setSortOrder] = useState('asc');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchData();
-  }, [currentPage, sortBy, sortOrder]);
+  }, [currentPage, sortBy, sortOrder, searchQuery]);
 
   const fetchData = () => {
-    fetch(`/api/flats?page=${currentPage}&limit=${itemsPerPage}&sortBy=${sortBy}&sortOrder=${sortOrder}`)
+    fetch(`/api/flats?page=${currentPage}&limit=${itemsPerPage}&sortBy=${sortBy}&sortOrder=${sortOrder}&search=${searchQuery}`)
       .then(response => response.json())
       .then(data => setData(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -45,9 +48,23 @@ function DataComponent() {
     setSortBy(columnName);
   };
 
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+    setCurrentPage(1); // Reset to first page on new search
+  };
+
   return (
     <Container>
-      <h2>Data from Server</h2>
+       <Box display="flex" justifyContent="flex-end" marginBottom="20px">
+        <TextField
+          label="Search"
+          variant="outlined"
+          value={searchQuery}
+          onChange={handleSearch}
+          style={{ marginLeft: 'auto' }}
+
+        />
+      </Box>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -75,6 +92,15 @@ function DataComponent() {
               </TableCell>
               <TableCell>
                 <TableSortLabel
+                  active={sortBy === 'city'}
+                  direction={sortBy === 'city' ? sortOrder : 'asc'}
+                  onClick={() => handleSort('city')}
+                >
+                  City
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
                   active={sortBy === 'description'}
                   direction={sortBy === 'description' ? sortOrder : 'asc'}
                   onClick={() => handleSort('description')}
@@ -92,6 +118,7 @@ function DataComponent() {
                   <img src={item.img} alt={item.name} style={{ width: '50px', height: '50px' }} />
                 </TableCell>
                 <TableCell>{item.name}</TableCell>
+                <TableCell>{item.city}</TableCell>
                 <TableCell>{item.description}</TableCell>
               </TableRow>
             ))}
