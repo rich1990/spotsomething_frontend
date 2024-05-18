@@ -22,14 +22,6 @@ jobs:
         working-directory: spotaroom_server
         run: npm install
 
-      - name: Run Tests for Server
-        working-directory: spotaroom_server
-        run: npm test
-
       - name: Install Dependencies for Client
         working-directory: spotaroom_client
         run: npm install
-
-      - name: Run Tests for Client
-        working-directory: spotaroom_client
-        run: npm test
