@@ -57,7 +57,7 @@ function DataComponent() {
     <Container>
        <Box display="flex" justifyContent="flex-end" marginBottom="20px">
         <TextField
-          label="Search"
+          label="Search City"
           variant="outlined"
           value={searchQuery}
           onChange={handleSearch}
