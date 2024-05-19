@@ -4,6 +4,8 @@ const axios = require('axios');
 const app = express();
 app.use(express.json());
 
+module.exports = app;
+
 const SYMFONY_API_BASE_URL = 'http://spotaroom.test/api'; // Replace with your Symfony API base URL
 
 // Define your API key
