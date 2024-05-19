@@ -14,6 +14,12 @@ and start the server
  node server.js
 ```
 
+Testing
+```bash
+ npx jest
+```
+
+
 go to the ReactJS folder in spotaroom_frontend
 
 ```bash
@@ -27,7 +33,7 @@ and start the app
 
 Testing
 ```bash
- npm start
+ npm test
 ```
 
 ## Configuring with microservice
