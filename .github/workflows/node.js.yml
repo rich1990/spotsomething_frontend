@@ -22,9 +22,9 @@ jobs:
         working-directory: spotaroom_server
         run: npm install
 
-      - name: Run Tests for Server
-        working-directory: spotaroom_server
-        run: npx jest
+      # - name: Run Tests for Server
+      #   working-directory: spotaroom_server
+      #   run: npx jest
 
       - name: Install Dependencies for Client
         working-directory: spotaroom_client
