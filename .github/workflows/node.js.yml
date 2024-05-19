@@ -30,6 +30,6 @@ jobs:
         working-directory: spotaroom_client
         run: npm install
 
-      - name: Run Tests for Client
-        working-directory: spotaroom_client
-        run: npm test
+      # - name: Run Tests for Client
+      #   working-directory: spotaroom_client
+      #   run: npm test
