@@ -27,7 +27,7 @@ and start the app
 
 Testing
 ```bash
- ./vendor/bin/phpunit tests/FlatsTest.php 
+ npm start
 ```
 
 ## Configuring with microservice
