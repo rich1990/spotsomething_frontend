@@ -25,6 +25,11 @@ and start the app
  npm start
 ```
 
+Testing
+```bash
+ ./vendor/bin/phpunit tests/FlatsTest.php 
+```
+
 ## Configuring with microservice
 
 Make sure you define the SYMFONY_API_BASE_URL to define the microservice URL
