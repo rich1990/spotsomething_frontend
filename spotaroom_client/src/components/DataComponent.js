@@ -13,7 +13,9 @@ import {
   Button,
   TextField,
   Box,
+  useMediaQuery,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 function DataComponent() {
   const [data, setData] = useState([]);
@@ -22,16 +24,26 @@ function DataComponent() {
   const [sortBy, setSortBy] = useState('id');
   const [sortOrder, setSortOrder] = useState('asc');
   const [searchQuery, setSearchQuery] = useState('');
+  const theme = useTheme();
+  const isPhone = useMediaQuery(theme.breakpoints.down('sm'));
+
+  useEffect(() => {
+    if (searchQuery.length > 3 || searchQuery.length == 0) {
+      fetchData();
+    }
+  }, [searchQuery]);
 
   useEffect(() => {
     fetchData();
-  }, [currentPage, sortBy, sortOrder, searchQuery]);
+  }, [currentPage, sortBy, sortOrder]);
 
   const fetchData = () => {
-    fetch(`/api/flats?page=${currentPage}&limit=${itemsPerPage}&sortBy=${sortBy}&sortOrder=${sortOrder}&search=${searchQuery}`)
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.error('Error fetching data:', error));
+    fetch(
+      `/api/flats?page=${currentPage}&limit=${itemsPerPage}&sortBy=${sortBy}&sortOrder=${sortOrder}&search=${searchQuery}`
+    )
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .catch((error) => console.error('Error fetching data:', error));
   };
 
   const nextPage = () => {
@@ -55,14 +67,13 @@ function DataComponent() {
 
   return (
     <Container>
-       <Box display="flex" justifyContent="flex-end" marginBottom="20px">
+      <Box display="flex" justifyContent="flex-end" marginBottom="20px">
         <TextField
-          label="Search City"
+          label="Search"
           variant="outlined"
           value={searchQuery}
           onChange={handleSearch}
           style={{ marginLeft: 'auto' }}
-
         />
       </Box>
       <TableContainer component={Paper}>
@@ -78,9 +89,11 @@ function DataComponent() {
                   ID
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
-                Image
-              </TableCell>
+              {!isPhone && (
+                <TableCell>
+                  Image
+                </TableCell>
+              )}
               <TableCell>
                 <TableSortLabel
                   active={sortBy === 'name'}
@@ -90,36 +103,42 @@ function DataComponent() {
                   Name
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={sortBy === 'city'}
-                  direction={sortBy === 'city' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('city')}
-                >
-                  City
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={sortBy === 'description'}
-                  direction={sortBy === 'description' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('description')}
-                >
-                  Description
-                </TableSortLabel>
-              </TableCell>
+              {!isPhone && (
+                <>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'city'}
+                      direction={sortBy === 'city' ? sortOrder : 'asc'}
+                      onClick={() => handleSort('city')}
+                    >
+                      City
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={sortBy === 'description'}
+                      direction={sortBy === 'description' ? sortOrder : 'asc'}
+                      onClick={() => handleSort('description')}
+                    >
+                      Description
+                    </TableSortLabel>
+                  </TableCell>
+                </>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((item) => (
               <TableRow key={item.id}>
                 <TableCell>{item.id}</TableCell>
-                <TableCell>
-                  <img src={item.img} alt={item.name} style={{ width: '50px', height: '50px' }} />
-                </TableCell>
+                {!isPhone && (
+                  <TableCell>
+                    <img src={item.img} alt={item.name} style={{ width: '50px', height: '50px' }} />
+                  </TableCell>
+                )}
                 <TableCell>{item.name}</TableCell>
-                <TableCell>{item.city}</TableCell>
-                <TableCell>{item.description}</TableCell>
+                {!isPhone && <TableCell>{item.city}</TableCell>}
+                {!isPhone && <TableCell>{item.description}</TableCell>}
               </TableRow>
             ))}
           </TableBody>
