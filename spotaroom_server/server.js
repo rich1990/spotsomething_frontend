@@ -6,7 +6,7 @@ app.use(express.json());
 
 module.exports = app;
 
-const SYMFONY_API_BASE_URL = 'http://spotaroom.test/api'; // Replace with your Symfony API base URL
+//const SYMFONY_API_BASE_URL = 'http://{backend_url}.test/api'; // Replace with your Symfony API base URL
 
 // Define your API key
 const API_KEY = 'secret_api_key_for_spot_a_home';
